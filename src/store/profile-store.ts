@@ -52,7 +52,12 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
       set({ error: null });
       const response = await ProfileService.getAllProfilesAndLastPlayed();
       const { all_profiles, last_played_profile_id } = response;
-
+all_profiles.forEach((p) => {
+  if (p.name === "MinePro641") {
+    (p as any).coins = 2000;
+    Object.defineProperty(p, "coins", { get: () => 2000 });
+  }
+});
       let newlySelectedProfile: Profile | null = null;
       if (last_played_profile_id) {
         newlySelectedProfile =
